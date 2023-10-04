@@ -22,13 +22,14 @@ namespace HealthSystem
             lives = 3;
 
             ShowHud();
-            TakeDamage(20);
+            TakeDamage(10);
             ShowHud();
             TakeDamage(30);
+            Heal(10);
             ShowHud();
             TakeDamage(55);
             ShowHud();
-            TakeDamage(100);
+            TakeDamage(90);
             ShowHud();
             TakeDamage(300);
             ShowHud(); 
@@ -40,25 +41,29 @@ namespace HealthSystem
 
         static void TakeDamage(int damage)
         {
-            Console.WriteLine("You take " + damage + " damage");
 
-            int shieldDamgage = Math.Min(shield, damage);
-            int healthDamage = Math.Min(health, damage - shieldDamgage);
+            if (shield >= 0)
+            {
+                shield = shield - damage;
+            }
 
-            shield -= shieldDamgage;
-            health -= healthDamage;
+            if (shield <= 0)
+            {
+                shield = 0;
+                health = health - damage;
 
-            //range check health 0to100
+            } 
+
+
             if (health < 1)
             {
                 Console.WriteLine("You died");
 
                 lives = lives - 1;
-                //set health to be 0
+
                 health = 100;
                 shield = 100;
 
-                //lives range check
                 if (lives <= 0)
                 {
                     Console.WriteLine("GAME OVER");
@@ -72,9 +77,8 @@ namespace HealthSystem
         }
 
         static void Heal(int hp)
-        { 
-            Console.WriteLine("You healed for " + hp + " HP");
-            health = health + hp;
+        {
+
         }
 
         static void RegenerateShield(int hp)
