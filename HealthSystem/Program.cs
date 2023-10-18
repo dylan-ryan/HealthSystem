@@ -31,26 +31,76 @@ namespace HealthSystem
             UnitTestHealthSystem();
 
             Reset();
+            //Show takedamage effects
+            ShowHud();
+            TakeDamage(50);
+            ShowHud();
+            TakeDamage(60);
+            ShowHud();
+            TakeDamage(150);
+            ShowHud();
+            //show heal
+            Reset();
+            ShowHud();
+            TakeDamage(150);
+            ShowHud();
+            Heal(60);
+            ShowHud();
+            //show regenerateshield
+            RegenerateShield(50);
+            ShowHud();
+            RegenerateShield(60);
+            ShowHud();
+            //negatives
+            Reset();
+            ShowHud();
+            TakeDamage(199);
+            ShowHud();
+            Heal(-50);
+            ShowHud();
+            RegenerateShield(-50);
+            ShowHud();
+            //show xp
+            Reset();
             ShowHud();
             IncreaseXP(100);
             ShowHud();
             IncreaseXP(150);
             ShowHud();
-            TakeDamage(90);
-            ShowHud();
-            TakeDamage(105);
+            //strings
+            Reset();
             ShowHud();
             TakeDamage(100);
             ShowHud();
+            TakeDamage(10);
+            ShowHud();
+            TakeDamage(30);
+            ShowHud();
+            TakeDamage(15);
+            ShowHud();
+            TakeDamage(40);
+            ShowHud();
+            TakeDamage(10);
+            ShowHud();
+            //show revive
+            Reset();
+            ShowHud();
+            TakeDamage(200);
+            ShowHud();
             Revive();
             ShowHud();
-            TakeDamage(150);
+            TakeDamage(200);
             ShowHud();
-            Heal(50);
+            Revive();
             ShowHud();
-            RegenerateShield(100);
+            TakeDamage(200);
             ShowHud();
-
+            Revive();
+            ShowHud();
+            Revive();
+            ShowHud();
+            Reset();
+            ShowHud();
             Console.ReadKey(true);
         }
 
@@ -148,7 +198,7 @@ namespace HealthSystem
             health = 100;
             shield = 100;
             lives = 3;
-            level = 0;
+            level = 1;
             xp = 0;
             Console.WriteLine("NEW GAME");
         }
