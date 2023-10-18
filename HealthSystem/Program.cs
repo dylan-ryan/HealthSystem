@@ -37,25 +37,31 @@ namespace HealthSystem
 
         static void TakeDamage(int damage)
         {
-            if (shield > 0)
+            if (damage > 0)
             {
-                shield -= damage;
-               
-                if (shield < 0)
+
+                if (shield > 0)
                 {
-                health += shield;
-                shield = 0;
+                    shield -= damage;
+
+                    if (shield < 0)
+                    {
+                        health += shield;
+                        shield = 0;
+                    }
+
+                }
+                else
+                {
+                    health -= damage;
+                }
+                if (health < 0)
+                {
+                    health = 0;
                 }
 
-            }         
-            else
-            {
-                health -= damage;
             }
-            if (health < 0)
-            {
-                health = 0;
-            }
+
         }
 
         static void Revive()
@@ -76,32 +82,42 @@ namespace HealthSystem
 
         static void Heal(int hp)
         {
-            if (health < 100)
+            if (hp > 0)
             {
-                health += hp;
-            }
-            if (health >= 100)
-            {
-                health = 100;
+                if (health < 100)
+                {
+                    health += hp;
+                }
+                if (health >= 100)
+                {
+                    health = 100;
+                }
             }
         }
 
         static void RegenerateShield(int shp)
         {
-            if (shield < 100)
+            if (shp > 0)
             {
-                shield += shp;
-            }
-            if (shield >= 100)
-            {
-                shield = 100;
+                if (shield < 100)
+                {
+                    shield += shp;
+                }
+                if (shield >= 100)
+                {
+                    shield = 100;
+                }
             }
         }
 
         static void IncreaseXP(int lvl)
         {
             xp += lvl;
-            level = 1 + (xp / 100);
+            if (xp > 100)
+            {
+                xp -= 100;
+                level += 1 + (xp / 100);
+            }
         }
 
         static void ShowHud()
