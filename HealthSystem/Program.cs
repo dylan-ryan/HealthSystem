@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.Eventing.Reader;
 using System.Linq;
+using System.Media;
 using System.Text;
 using System.Threading.Tasks;
 using static System.Net.Mime.MediaTypeNames;
@@ -20,16 +21,34 @@ namespace HealthSystem
         static void Main(string[] args)
         {
 
+
             health = 100;
             shield = 100;
             lives = 3;
             level = 1;
-            
-            UnitTestHealthSystem();
+            xp = 0;
             UnitTestXPSystem();
+            UnitTestHealthSystem();
 
+            Reset();
             ShowHud();
-            TakeDamage(110);
+            IncreaseXP(100);
+            ShowHud();
+            IncreaseXP(150);
+            ShowHud();
+            TakeDamage(90);
+            ShowHud();
+            TakeDamage(105);
+            ShowHud();
+            TakeDamage(100);
+            ShowHud();
+            Revive();
+            ShowHud();
+            TakeDamage(150);
+            ShowHud();
+            Heal(50);
+            ShowHud();
+            RegenerateShield(100);
             ShowHud();
 
             Console.ReadKey(true);
@@ -61,7 +80,7 @@ namespace HealthSystem
                 }
 
             }
-
+            Console.WriteLine("Player is about to take " + damage + " damage");
         }
 
         static void Revive()
@@ -78,6 +97,7 @@ namespace HealthSystem
                 health = 0;
                 shield = 0;
             }
+            Console.WriteLine("Player is about to revive");
         }
 
         static void Heal(int hp)
@@ -93,6 +113,7 @@ namespace HealthSystem
                     health = 100;
                 }
             }
+            Console.WriteLine("Player is about to heal " + hp + " HP");
         }
 
         static void RegenerateShield(int shp)
@@ -108,21 +129,60 @@ namespace HealthSystem
                     shield = 100;
                 }
             }
+            Console.WriteLine("Player is about to regenerate " + shp + " shield");
         }
 
         static void IncreaseXP(int lvl)
         {
-            xp += lvl;
-            if (xp > 100)
+            xp = lvl;
+            if (xp >= 100)
             {
-                xp -= 100;
+                xp -= lvl/100 * 100;
                 level += 1 + (xp / 100);
             }
+            Console.WriteLine("Player is about to gain " + lvl + " XP");
+        }
+
+        static void Reset()
+        {
+            health = 100;
+            shield = 100;
+            lives = 3;
+            level = 0;
+            xp = 0;
+            Console.WriteLine("NEW GAME");
         }
 
         static void ShowHud()
         {
+            if (health == 100)
+            {
+                healthStatus = "Perfectly Healthy";
+            }
+            if (health <= 90)
+            {
+                healthStatus = "Healthy";
+            }
+            if (health <= 75)
+            {
+               healthStatus = "Hurt";
+            }
+            if (health <= 50)
+            {
+                healthStatus = "Badly Hurt";
+            }
+            if (health <= 10)
+            {
+                healthStatus = "Imminent Danger";
+            }
+            if (health == 0)
+            {
+                healthStatus = "Dead";
+            }
+
+
             Console.WriteLine();
+            Console.WriteLine("+---------------------------+");
             Console.WriteLine("Level: " + level + " XP: " + xp + "% ");
             Console.ForegroundColor = ConsoleColor.Black;
             Console.BackgroundColor = ConsoleColor.Blue;
@@ -132,9 +192,14 @@ namespace HealthSystem
             Console.BackgroundColor = ConsoleColor.DarkGreen;
             Console.WriteLine(" Lives: " + lives + " ");
             Console.ResetColor();
-
+            Console.WriteLine("You are " + healthStatus);
+            Console.WriteLine("+---------------------------+");
             Console.WriteLine();
+
+
+
         }
+
         static void UnitTestHealthSystem()
         {
             Debug.WriteLine("Unit testing Health System started...");
